@@ -72,6 +72,12 @@ public class PAWorldActivity extends Activity {
                 FrameLayout.LayoutParams.WRAP_CONTENT);
         lp.gravity = Gravity.CENTER;
 
+        final ImageView bean = new ImageView(this);
+        bean.setImageResource(com.android.internal.R.drawable.pa_bean);
+        bean.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+        bean.setScaleX(0.4f);
+        bean.setScaleY(0.4f);
+
         final ImageView world = new ImageView(this);
         world.setImageResource(com.android.internal.R.drawable.pa_world);
         world.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
@@ -80,14 +86,6 @@ public class PAWorldActivity extends Activity {
         final View bg = new View(this);
         bg.setBackgroundColor(SOLID_BGCOLOR);
         bg.setAlpha(0f);
-
-        final TextView letter = new TextView(this);
-
-        letter.setTypeface(bold);
-        letter.setTextSize(200);
-        letter.setTextColor(TEXT_COLOR);
-        letter.setGravity(Gravity.CENTER);
-        letter.setText("PA");
 
         final int p = (int)(4 * metrics.density);
 
@@ -102,7 +100,7 @@ public class PAWorldActivity extends Activity {
         tv.setVisibility(View.INVISIBLE);
 
         mContent.addView(bg);
-        mContent.addView(letter, lp);
+        mContent.addView(bean, lp);
         mContent.addView(world, lp);
 
         final FrameLayout.LayoutParams lp2 = new FrameLayout.LayoutParams(lp);
@@ -120,9 +118,9 @@ public class PAWorldActivity extends Activity {
                     mContent.performLongClick();
                     return;
                 }
-                letter.animate().cancel();
-                final float offset = (int)letter.getRotation() % 360;
-                letter.animate()
+                bean.animate().cancel();
+                final float offset = (int)bean.getRotation() % 360;
+                bean.animate()
                     .rotationBy((Math.random() > 0.5f ? 360 : -360) - offset)
                     .setInterpolator(new DecelerateInterpolator())
                     .setDuration(700).start();
@@ -135,7 +133,7 @@ public class PAWorldActivity extends Activity {
                 if (world.getVisibility() != View.VISIBLE) {
                     bg.setScaleX(0.01f);
                     bg.animate().alpha(1f).scaleX(1f).setStartDelay(500).start();
-                    letter.animate().alpha(0f).scaleY(0.5f).scaleX(0.5f)
+                    bean.animate().alpha(0f).scaleY(0.2f).scaleX(0.2f)
                             .rotationBy(360)
                             .setInterpolator(new AccelerateInterpolator())
                             .setDuration(1000)

@@ -17,6 +17,7 @@
 <resources>
 
     <!-- PA World Easter Egg -->
+    <java-symbol type="drawable" name="pa_bean" />
     <java-symbol type="drawable" name="pa_world" />
 
     <!-- Alert Slider -->
