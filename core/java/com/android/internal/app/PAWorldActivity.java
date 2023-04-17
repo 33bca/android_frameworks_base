@@ -105,7 +105,7 @@ public class PAWorldActivity extends Activity {
             @Override
             public void onClick(View v) {
                 clicks++;
-                if (clicks >= 6) {
+                if (clicks >= 8) {
                     mContent.performLongClick();
                     return;
                 }
