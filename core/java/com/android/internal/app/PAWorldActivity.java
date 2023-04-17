@@ -85,19 +85,19 @@ public class PAWorldActivity extends Activity {
         world.setVisibility(View.INVISIBLE);
         mContent.addView(world, lp);
 
-        final TextView tv = new TextView(this);
-        if (light != null) tv.setTypeface(light);
-        tv.setTextSize(20);
-        tv.setPadding((int)(4 * metrics.density),
+        final TextView text = new TextView(this);
+        if (light != null) text.setTypeface(light);
+        text.setTextSize(20);
+        text.setPadding((int)(4 * metrics.density),
                       (int)(4 * metrics.density),
                       (int)(4 * metrics.density),
                       (int)(4 * metrics.density));
-        tv.setTextColor(TEXT_COLOR);
-        tv.setGravity(Gravity.CENTER);
-        tv.setTransformationMethod(new AllCapsTransformationMethod(this));
-        tv.setText("Paranoid Android " + getVersion());
-        tv.setVisibility(View.INVISIBLE);
-        mContent.addView(tv, lp2);
+        text.setTextColor(TEXT_COLOR);
+        text.setGravity(Gravity.CENTER);
+        text.setTransformationMethod(new AllCapsTransformationMethod(this));
+        text.setText("Paranoid Android " + getVersion());
+        text.setVisibility(View.INVISIBLE);
+        mContent.addView(text, lp2);
 
         mContent.setOnClickListener(new View.OnClickListener() {
             int clicks;
@@ -134,9 +134,9 @@ public class PAWorldActivity extends Activity {
                         .setDuration(1000).setStartDelay(500)
                         .setInterpolator(new AnticipateOvershootInterpolator())
                         .start();
-                    tv.setAlpha(0f);
-                    tv.setVisibility(View.VISIBLE);
-                    tv.animate().alpha(1f).setDuration(1000).setStartDelay(1000).start();
+                    text.setAlpha(0f);
+                    text.setVisibility(View.VISIBLE);
+                    text.animate().alpha(1f).setDuration(1000).setStartDelay(1000).start();
                     return true;
                 }
                 return false;
