@@ -75,8 +75,7 @@ public class PAWorldActivity extends Activity {
         final ImageView bean = new ImageView(this);
         bean.setImageResource(com.android.internal.R.drawable.pa_bean);
         bean.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-        bean.setScaleX(0.4f);
-        bean.setScaleY(0.4f);
+        bean.setMaxWidth(metrics.widthPixels * 0.75)
 
         final ImageView world = new ImageView(this);
         world.setImageResource(com.android.internal.R.drawable.pa_world);
@@ -133,7 +132,7 @@ public class PAWorldActivity extends Activity {
                 if (world.getVisibility() != View.VISIBLE) {
                     bg.setScaleX(0.01f);
                     bg.animate().alpha(1f).scaleX(1f).setStartDelay(500).start();
-                    bean.animate().alpha(0f).scaleY(0.2f).scaleX(0.2f)
+                    bean.animate().alpha(0f).scaleY(0.5f).scaleX(0.5f)
                             .rotationBy(360)
                             .setInterpolator(new AccelerateInterpolator())
                             .setDuration(1000)
