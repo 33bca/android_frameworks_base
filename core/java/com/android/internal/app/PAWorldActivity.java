@@ -72,10 +72,10 @@ public class PAWorldActivity extends Activity {
                 FrameLayout.LayoutParams.WRAP_CONTENT);
         lp.gravity = Gravity.CENTER;
 
-        final ImageView logo = new ImageView(this);
-        logo.setImageResource(com.android.internal.R.drawable.pa_world_logo);
-        logo.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-        logo.setVisibility(View.INVISIBLE);
+        final ImageView world = new ImageView(this);
+        world.setImageResource(com.android.internal.R.drawable.pa_world);
+        world.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+        world.setVisibility(View.INVISIBLE);
 
         final View bg = new View(this);
         bg.setBackgroundColor(SOLID_BGCOLOR);
@@ -103,7 +103,7 @@ public class PAWorldActivity extends Activity {
 
         mContent.addView(bg);
         mContent.addView(letter, lp);
-        mContent.addView(logo, lp);
+        mContent.addView(world, lp);
 
         final FrameLayout.LayoutParams lp2 = new FrameLayout.LayoutParams(lp);
         lp2.gravity = Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL;
@@ -132,7 +132,7 @@ public class PAWorldActivity extends Activity {
         mContent.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                if (logo.getVisibility() != View.VISIBLE) {
+                if (world.getVisibility() != View.VISIBLE) {
                     bg.setScaleX(0.01f);
                     bg.animate().alpha(1f).scaleX(1f).setStartDelay(500).start();
                     letter.animate().alpha(0f).scaleY(0.5f).scaleX(0.5f)
@@ -140,11 +140,11 @@ public class PAWorldActivity extends Activity {
                             .setInterpolator(new AccelerateInterpolator())
                             .setDuration(1000)
                             .start();
-                    logo.setAlpha(0f);
-                    logo.setVisibility(View.VISIBLE);
-                    logo.setScaleX(0.5f);
-                    logo.setScaleY(0.5f);
-                    logo.animate().alpha(1f).scaleX(1f).scaleY(1f)
+                    world.setAlpha(0f);
+                    world.setVisibility(View.VISIBLE);
+                    world.setScaleX(0.5f);
+                    world.setScaleY(0.5f);
+                    world.animate().alpha(1f).scaleX(1f).scaleY(1f)
                         .setDuration(1000).setStartDelay(500)
                         .setInterpolator(new AnticipateOvershootInterpolator())
                         .start();
@@ -157,7 +157,7 @@ public class PAWorldActivity extends Activity {
             }
         });
 
-        logo.setOnLongClickListener(new View.OnLongClickListener() {
+        world.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 try {
