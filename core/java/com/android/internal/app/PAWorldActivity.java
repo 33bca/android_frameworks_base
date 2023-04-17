@@ -50,6 +50,10 @@ public class PAWorldActivity extends Activity {
     final static int CLEAR_BGCOLOR = 0xC0000000;
     final static int TEXT_COLOR = 0xFFFFFFFF;
 
+    private static final String AOSPA_BUILD_VARIANT_PROP = "ro.aospa.build.variant";
+    private static final String AOSPA_VERSION_MAJOR_PROP = "ro.aospa.version.major";
+    private static final String AOSPA_VERSION_MINOR_PROP = "ro.aospa.version.minor";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,9 +98,7 @@ public class PAWorldActivity extends Activity {
         tv.setTextColor(TEXT_COLOR);
         tv.setGravity(Gravity.CENTER);
         tv.setTransformationMethod(new AllCapsTransformationMethod(this));
-        String paVersion = SystemProperties.get("ro.pa.version");
-        paVersion = paVersion.replaceAll("([0-9\\.]+?)-.*", "$1");
-        tv.setText("Paranoid Android " + paVersion);
+        tv.setText("Paranoid Android " + getVersion());
         tv.setVisibility(View.INVISIBLE);
 
         mContent.addView(bg);
@@ -173,5 +175,19 @@ public class PAWorldActivity extends Activity {
         });
 
         setContentView(mContent);
+    }
+
+    private String getVersion() {
+        String aospaVersionMajor = SystemProperties.get(AOSPA_VERSION_MAJOR_PROP, "Unknown");
+        String aospaVersionMinor = SystemProperties.get(AOSPA_VERSION_MINOR_PROP, "Unknown");
+        String aospaBuildVariant = SystemProperties.get(AOSPA_BUILD_VARIANT_PROP, "Unknown");
+
+        if (aospaBuildVariant.equals("Release")) {
+            return aospaVersionMajor + " " + aospaVersionMinor;
+        } else if (aospaBuildVariant.equals("Unofficial")) {
+           return aospaVersionMajor + " " + aospaBuildVariant;
+        } else {
+           return aospaVersionMajor + " " + aospaBuildVariant + " " + aospaVersionMinor;
+        }
     }
 }
