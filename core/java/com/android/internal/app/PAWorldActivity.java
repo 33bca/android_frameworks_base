@@ -79,12 +79,13 @@ public class PAWorldActivity extends Activity {
         world.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
         world.setVisibility(View.INVISIBLE);
 
-        final int p = (int)(4 * metrics.density);
-
         final TextView tv = new TextView(this);
         if (light != null) tv.setTypeface(light);
         tv.setTextSize(20);
-        tv.setPadding(p, p, p, p);
+        tv.setPadding((int)(4 * metrics.density),
+                      (int)(4 * metrics.density),
+                      (int)(4 * metrics.density),
+                      (int)(4 * metrics.density));
         tv.setTextColor(TEXT_COLOR);
         tv.setGravity(Gravity.CENTER);
         tv.setTransformationMethod(new AllCapsTransformationMethod(this));
@@ -96,7 +97,7 @@ public class PAWorldActivity extends Activity {
 
         final FrameLayout.LayoutParams lp2 = new FrameLayout.LayoutParams(lp);
         lp2.gravity = Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL;
-        lp2.bottomMargin = p;
+        lp2.bottomMargin = (int)(4 * metrics.density);
 
         mContent.addView(tv, lp2);
 
