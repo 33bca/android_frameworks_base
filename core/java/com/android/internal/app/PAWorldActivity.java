@@ -48,7 +48,6 @@ public class PAWorldActivity extends Activity {
     final Handler mHandler = new Handler();
 
     final static int SOLID_BGCOLOR = 0xFF000000;
-    final static int CLEAR_BGCOLOR = 0xC0000000;
     final static int TEXT_COLOR = 0xFFFFFFFF;
 
     private static final String AOSPA_BUILD_VARIANT_PROP = "ro.aospa.build.variant";
@@ -66,7 +65,7 @@ public class PAWorldActivity extends Activity {
         Typeface light = Typeface.create("sans-serif-light", Typeface.NORMAL);
 
         mContent = new FrameLayout(this);
-        mContent.setBackgroundColor(CLEAR_BGCOLOR);
+        mContent.setBackgroundColor(SOLID_BGCOLOR);
 
         final FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.WRAP_CONTENT,
@@ -83,10 +82,6 @@ public class PAWorldActivity extends Activity {
         world.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
         world.setVisibility(View.INVISIBLE);
 
-        final View bg = new View(this);
-        bg.setBackgroundColor(SOLID_BGCOLOR);
-        bg.setAlpha(0f);
-
         final int p = (int)(4 * metrics.density);
 
         final TextView tv = new TextView(this);
@@ -99,7 +94,6 @@ public class PAWorldActivity extends Activity {
         tv.setText("Paranoid Android " + getVersion());
         tv.setVisibility(View.INVISIBLE);
 
-        mContent.addView(bg);
         mContent.addView(bean, lp);
         mContent.addView(world, lp);
 
@@ -131,8 +125,6 @@ public class PAWorldActivity extends Activity {
             @Override
             public boolean onLongClick(View v) {
                 if (world.getVisibility() != View.VISIBLE) {
-                    bg.setScaleX(0.01f);
-                    bg.animate().alpha(1f).scaleX(1f).setStartDelay(500).start();
                     bean.animate().alpha(0f).scaleY(0.5f).scaleX(0.5f)
                             .rotationBy(360)
                             .setInterpolator(new AccelerateInterpolator())
