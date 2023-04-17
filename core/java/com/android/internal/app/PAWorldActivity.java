@@ -24,7 +24,6 @@ import android.graphics.Typeface;
 import android.provider.Settings;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.SystemProperties;
 import android.os.UserHandle;
 import android.text.method.AllCapsTransformationMethod;
@@ -44,8 +43,6 @@ import android.widget.Toast;
 
 public class PAWorldActivity extends Activity {
     FrameLayout mContent;
-
-    final Handler mHandler = new Handler();
 
     final static int SOLID_BGCOLOR = 0xFF000000;
     final static int TEXT_COLOR = 0xFFFFFFFF;
