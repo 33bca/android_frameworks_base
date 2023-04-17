@@ -6712,6 +6712,7 @@
 
         <activity android:name="com.android.internal.app.PAWorldActivity"
                 android:theme="@style/Theme.Wallpaper.NoTitleBar.Fullscreen"
+                android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
                 android:process=":ui">
         </activity>
 
