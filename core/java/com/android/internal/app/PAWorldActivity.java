@@ -75,7 +75,7 @@ public class PAWorldActivity extends Activity {
         final ImageView bean = new ImageView(this);
         bean.setImageResource(com.android.internal.R.drawable.pa_bean);
         bean.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-        bean.setMaxWidth(metrics.widthPixels * 0.75)
+        bean.setMaxWidth((int)(metrics.widthPixels * 0.75));
 
         final ImageView world = new ImageView(this);
         world.setImageResource(com.android.internal.R.drawable.pa_world);
