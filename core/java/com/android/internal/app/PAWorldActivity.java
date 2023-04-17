@@ -44,8 +44,9 @@ import android.widget.Toast;
 
 public class PAWorldActivity extends Activity {
     FrameLayout mContent;
-    int mCount;
+
     final Handler mHandler = new Handler();
+
     final static int SOLID_BGCOLOR = 0xFF000000;
     final static int CLEAR_BGCOLOR = 0xC0000000;
     final static int TEXT_COLOR = 0xFFFFFFFF;
