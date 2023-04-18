@@ -71,6 +71,13 @@ public class ParanoidWorldActivity extends Activity {
         lp2.gravity = Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL;
         lp2.bottomMargin = (int)(4 * metrics.density);
 
+        final ImageView bg = new ImageView(this);
+        bg.setImageResource(com.android.internal.R.drawable.paranoid_bg);
+        bg.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        bg.setScaleX(1.2f);
+        bg.setScaleY(1.2f);
+        mContent.addView(bg, lp);
+
         final ImageView bean = new ImageView(this);
         bean.setImageResource(com.android.internal.R.drawable.paranoid_bean);
         bean.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
