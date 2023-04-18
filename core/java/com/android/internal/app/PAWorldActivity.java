@@ -22,7 +22,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.provider.Settings;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemProperties;
 import android.os.UserHandle;
@@ -39,7 +38,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class PAWorldActivity extends Activity {
     FrameLayout mContent;
