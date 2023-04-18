@@ -51,15 +51,15 @@ public class PAWorldActivity extends Activity {
     private static final String AOSPA_VERSION_MAJOR_PROP = "ro.aospa.version.major";
     private static final String AOSPA_VERSION_MINOR_PROP = "ro.aospa.version.minor";
 
+    private static final Typeface bold = Typeface.create("sans-serif", Typeface.BOLD);
+    private static final Typeface light = Typeface.create("sans-serif-light", Typeface.NORMAL);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
-
-        Typeface bold = Typeface.create("sans-serif", Typeface.BOLD);
-        Typeface light = Typeface.create("sans-serif-light", Typeface.NORMAL);
 
         mContent = new FrameLayout(this);
         mContent.setBackgroundColor(BG_COLOR);
@@ -69,15 +69,21 @@ public class PAWorldActivity extends Activity {
                 FrameLayout.LayoutParams.WRAP_CONTENT);
         lp.gravity = Gravity.CENTER;
 
+        final FrameLayout.LayoutParams lp2 = new FrameLayout.LayoutParams(lp);
+        lp2.gravity = Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL;
+        lp2.bottomMargin = (int)(4 * metrics.density);
+
         final ImageView bean = new ImageView(this);
         bean.setImageResource(com.android.internal.R.drawable.pa_bean);
         bean.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
         bean.setMaxWidth((int)(metrics.widthPixels * 0.75));
+        mContent.addView(bean, lp);
 
         final ImageView world = new ImageView(this);
         world.setImageResource(com.android.internal.R.drawable.pa_world);
         world.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
         world.setVisibility(View.INVISIBLE);
+        mContent.addView(world, lp);
 
         final TextView tv = new TextView(this);
         if (light != null) tv.setTypeface(light);
@@ -91,14 +97,6 @@ public class PAWorldActivity extends Activity {
         tv.setTransformationMethod(new AllCapsTransformationMethod(this));
         tv.setText("Paranoid Android " + getVersion());
         tv.setVisibility(View.INVISIBLE);
-
-        mContent.addView(bean, lp);
-        mContent.addView(world, lp);
-
-        final FrameLayout.LayoutParams lp2 = new FrameLayout.LayoutParams(lp);
-        lp2.gravity = Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL;
-        lp2.bottomMargin = (int)(4 * metrics.density);
-
         mContent.addView(tv, lp2);
 
         mContent.setOnClickListener(new View.OnClickListener() {
