@@ -44,7 +44,7 @@ import android.widget.Toast;
 public class PAWorldActivity extends Activity {
     FrameLayout mContent;
 
-    private static final int BG_COLOR = 0xFF000000;
+    private static final int BG_COLOR = 0xC0000000;
     private static final int TEXT_COLOR = 0xFFFFFFFF;
 
     private static final String AOSPA_BUILD_VARIANT_PROP = "ro.aospa.build.variant";
