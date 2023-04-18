@@ -6709,6 +6709,14 @@
                 android:icon="@drawable/platlogo"
                 android:process=":ui">
         </activity>
+
+        <activity android:name="com.android.internal.app.ParanoidWorldActivity"
+                android:theme="@style/Theme.Wallpaper.NoTitleBar.Fullscreen"
+                android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
+                android:icon="@drawable/platlogo"
+                android:process=":ui">
+        </activity>
+
         <activity android:name="com.android.internal.app.DisableCarModeActivity"
                 android:theme="@style/Theme.NoDisplay"
                 android:excludeFromRecents="true"
