@@ -53,6 +53,7 @@ public class ParanoidWorldActivity extends Activity {
 
     FrameLayout.LayoutParams lp;
     FrameLayout.LayoutParams lp2;
+    FrameLayout.LayoutParams lp3;
 
     private Sensor mAccelerometerSensor;
     private SensorManager mSensorManager;
@@ -87,12 +88,14 @@ public class ParanoidWorldActivity extends Activity {
 
         lp2 = new FrameLayout.LayoutParams(lp);
         lp2.gravity = Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL;
-        lp2.bottomMargin = (int)(4 * metrics.density);
+
+        lp3 = new FrameLayout.LayoutParams(lp2);
+        lp3.bottomMargin = (int)(4 * metrics.density);
 
         bg = new ImageView(this);
         bg.setImageResource(com.android.internal.R.drawable.paranoid_bg);
         bg.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        mContent.addView(bg, lp);
+        mContent.addView(bg, lp2);
 
         world = new ImageView(this);
         world.setImageResource(com.android.internal.R.drawable.paranoid_world);
@@ -116,7 +119,7 @@ public class ParanoidWorldActivity extends Activity {
         text.setText("Paranoid Android " + getVersion());
         text.setAlpha(0f);
         text.setVisibility(View.INVISIBLE);
-        mContent.addView(text, lp2);
+        mContent.addView(text, lp3);
 
         mContent.setOnClickListener(new View.OnClickListener() {
             int clicks;
@@ -202,7 +205,7 @@ public class ParanoidWorldActivity extends Activity {
 	    @Override
 	    public void onSensorChanged(SensorEvent event) {
             if (bg == null) return;
-		    float x = event.values[0];
+            float x = event.values[0];
             int widthBg = bg.getMeasuredWidth();
             int widthScreen = metrics.widthPixels;
             bg.setTranslationX(x * 10);
