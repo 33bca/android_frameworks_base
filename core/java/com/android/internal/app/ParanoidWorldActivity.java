@@ -169,14 +169,18 @@ public class ParanoidWorldActivity extends Activity {
         });
 
         setContentView(mContent);
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
         mSensorManager.registerListener(mSensorEventListener,
             mAccelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onPause() {
+        super.onPause();
         mSensorManager.unregisterListener(mSensorEventListener);
     }
 
