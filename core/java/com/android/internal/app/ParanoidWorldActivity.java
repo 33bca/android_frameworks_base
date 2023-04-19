@@ -29,8 +29,8 @@ import android.provider.Settings;
 import android.os.Bundle;
 import android.os.SystemProperties;
 import android.os.UserHandle;
-import android.text.method.AllCapsTransformationMethod;
-import android.text.method.TransformationMethod;
+import android.mText.method.AllCapsTransformationMethod;
+import android.mText.method.TransformationMethod;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.View;
@@ -44,16 +44,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class ParanoidWorldActivity extends Activity {
-    FrameLayout mContent;
-    ImageView bg;
-    ImageView world;
-    TextView text;
+    private FrameLayout mContent;
+    private ImageView mBackground;
+    private ImageView mWorld;
+    private TextView mText;
 
-    DisplayMetrics metrics;
+    private DisplayMetrics mMetrics;
 
-    FrameLayout.LayoutParams lp;
-    FrameLayout.LayoutParams lp2;
-    FrameLayout.LayoutParams lp3;
+    private FrameLayout.LayoutParams mLp;
+    private FrameLayout.LayoutParams mLp2;
+    private FrameLayout.LayoutParams mLp3;
 
     private Sensor mAccelerometerSensor;
     private SensorManager mSensorManager;
@@ -75,51 +75,51 @@ public class ParanoidWorldActivity extends Activity {
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         mAccelerometerSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
-        metrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        mMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(mMetrics);
 
         mContent = new FrameLayout(this);
         mContent.setBackgroundColor(BG_COLOR);
 
-        lp = new FrameLayout.LayoutParams(
+        mLp = new FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.WRAP_CONTENT,
                 FrameLayout.LayoutParams.WRAP_CONTENT);
-        lp.gravity = Gravity.CENTER;
+        mLp.gravity = Gravity.CENTER;
 
-        lp2 = new FrameLayout.LayoutParams(lp);
-        lp2.gravity = Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL;
+        mLp2 = new FrameLayout.LayoutParams(mLp);
+        mLp2.gravity = Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL;
 
-        lp3 = new FrameLayout.LayoutParams(lp2);
-        lp3.bottomMargin = (int)(4 * metrics.density);
+        mLp3 = new FrameLayout.LayoutParams(mLp2);
+        mLp3.bottomMargin = (int)(4 * mMetrics.density);
 
-        bg = new ImageView(this);
-        bg.setImageResource(com.android.internal.R.drawable.paranoid_bg);
-        bg.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        mContent.addView(bg, lp2);
+        mBackground = new ImageView(this);
+        mBackground.setImageResource(com.android.internal.R.drawable.paranoid_bg);
+        mBackground.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        mContent.addView(mBackground, mLp2);
 
-        world = new ImageView(this);
-        world.setImageResource(com.android.internal.R.drawable.paranoid_world);
-        world.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-        world.setScaleX(0.5f);
-        world.setScaleY(0.5f);
-        world.setAlpha(0f);
-        world.setVisibility(View.INVISIBLE);
-        mContent.addView(world, lp);
+        mWorld = new ImageView(this);
+        mWorld.setImageResource(com.android.internal.R.drawable.paranoid_world);
+        mWorld.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+        mWorld.setScaleX(0.5f);
+        mWorld.setScaleY(0.5f);
+        mWorld.setAlpha(0f);
+        mWorld.setVisibility(View.INVISIBLE);
+        mContent.addView(mWorld, mLp);
 
-        text = new TextView(this);
-        if (light != null) text.setTypeface(light);
-        text.setTextSize(20);
-        text.setPadding((int)(4 * metrics.density),
-                      (int)(4 * metrics.density),
-                      (int)(4 * metrics.density),
-                      (int)(4 * metrics.density));
-        text.setTextColor(TEXT_COLOR);
-        text.setGravity(Gravity.CENTER);
-        text.setTransformationMethod(new AllCapsTransformationMethod(this));
-        text.setText("Paranoid Android " + getVersion());
-        text.setAlpha(0f);
-        text.setVisibility(View.INVISIBLE);
-        mContent.addView(text, lp3);
+        mText = new TextView(this);
+        if (light != null) mText.setTypeface(light);
+        mText.setTextSize(20);
+        mText.setPadding((int)(4 * mMetrics.density),
+                      (int)(4 * mMetrics.density),
+                      (int)(4 * mMetrics.density),
+                      (int)(4 * mMetrics.density));
+        mText.setTextColor(TEXT_COLOR);
+        mText.setGravity(Gravity.CENTER);
+        mText.setTransformationMethod(new AllCapsTransformationMethod(this));
+        mText.setText("Paranoid Android " + getVersion());
+        mText.setAlpha(0f);
+        mText.setVisibility(View.INVISIBLE);
+        mContent.addView(mText, mLp3);
 
         mContent.setOnClickListener(new View.OnClickListener() {
             int clicks;
@@ -136,25 +136,25 @@ public class ParanoidWorldActivity extends Activity {
         mContent.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                if (world.getVisibility() != View.VISIBLE) {
-                    bg.animate().alpha(0.4f)
+                if (mWorld.getVisibility() != View.VISIBLE) {
+                    mBackground.animate().alpha(0.4f)
                         .setDuration(900).setStartDelay(500)
                         .setInterpolator(new AccelerateInterpolator())
                         .start();
-                    world.setVisibility(View.VISIBLE);
-                    world.animate().alpha(1f).scaleX(1f).scaleY(1f)
+                    mWorld.setVisibility(View.VISIBLE);
+                    mWorld.animate().alpha(1f).scaleX(1f).scaleY(1f)
                         .setDuration(1000).setStartDelay(500)
                         .setInterpolator(new AnticipateOvershootInterpolator())
                         .start();
-                    text.setVisibility(View.VISIBLE);
-                    text.animate().alpha(1f).setDuration(1000).setStartDelay(1000).start();
+                    mText.setVisibility(View.VISIBLE);
+                    mText.animate().alpha(1f).setDuration(1000).setStartDelay(1000).start();
                     return true;
                 }
                 return false;
             }
         });
 
-        world.setOnLongClickListener(new View.OnLongClickListener() {
+        mWorld.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 try {
@@ -204,11 +204,11 @@ public class ParanoidWorldActivity extends Activity {
     private final SensorEventListener mSensorEventListener = new SensorEventListener() {
 	    @Override
 	    public void onSensorChanged(SensorEvent event) {
-            if (bg == null) return;
+            if (mBackground == null) return;
             float x = event.values[0];
-            int widthBg = bg.getMeasuredWidth();
-            int widthScreen = metrics.widthPixels;
-            bg.setTranslationX(x * 10);
+            int widthBg = mBackground.getMeasuredWidth();
+            int widthScreen = mMetrics.widthPixels;
+            mBackground.setTranslationX(x * 10);
             android.util.Log.e("ParanoidWorldActivity", "x: " + x);
             android.util.Log.e("ParanoidWorldActivity", "widthBg: " + widthBg);
             android.util.Log.e("ParanoidWorldActivity", "widthScreen: " + widthScreen);
