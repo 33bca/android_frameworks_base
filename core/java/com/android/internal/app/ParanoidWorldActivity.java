@@ -20,6 +20,10 @@ import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.graphics.Typeface;
 import android.provider.Settings;
 import android.os.Bundle;
@@ -42,6 +46,9 @@ import android.widget.TextView;
 public class ParanoidWorldActivity extends Activity {
     FrameLayout mContent;
 
+    private Sensor mAccelerometerSensor;
+    private SensorManager mSensorManager;
+
     private static final int BG_COLOR = 0xFF000000;
     private static final int TEXT_COLOR = 0xFFFFFFFF;
 
@@ -55,6 +62,9 @@ public class ParanoidWorldActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        mAccelerometerSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
@@ -153,6 +163,19 @@ public class ParanoidWorldActivity extends Activity {
         setContentView(mContent);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        mSensorManager.registerListener(mSensorEventListener,
+            mAccelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL);
+    }
+
+    @Override
+    public void onPause() {
+        super.onResume();
+        mSensorManager.unregisterListener(mSensorEventListener);
+    }
+
     private String getVersion() {
         String aospaVersionMajor = SystemProperties.get(AOSPA_VERSION_MAJOR_PROP, "Unknown");
         String aospaVersionMinor = SystemProperties.get(AOSPA_VERSION_MINOR_PROP, "Unknown");
@@ -165,5 +188,23 @@ public class ParanoidWorldActivity extends Activity {
         } else {
            return aospaVersionMajor + " " + aospaBuildVariant + " " + aospaVersionMinor;
         }
+    }
+
+    private final SensorEventListener mSensorEventListener = new SensorEventListener() {
+	    @Override
+	    public void onSensorChanged(SensorEvent event) {
+		    float x = event.values[0];
+		    float y = event.values[1];
+		    float z = event.values[2];
+		    float acceleration = (float) Math.sqrt(x * x + y * y + z * z);
+
+		    if (acceleration > ACCELEROMETER_THRESHOLD && z <= ZFACEDOWN_THRESHOLD) {
+			    playChargingAnimation(false);
+		    }
+	    }
+
+	    @Override
+	    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+	    }
     }
 }
