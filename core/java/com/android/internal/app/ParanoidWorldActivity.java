@@ -45,6 +45,14 @@ import android.widget.TextView;
 
 public class ParanoidWorldActivity extends Activity {
     FrameLayout mContent;
+    ImageView bg;
+    ImageView world;
+    TextView text;
+
+    DisplayMetrics metrics;
+
+    FrameLayout.LayoutParams lp;
+    FrameLayout.LayoutParams lp2;
 
     private Sensor mAccelerometerSensor;
     private SensorManager mSensorManager;
@@ -59,8 +67,6 @@ public class ParanoidWorldActivity extends Activity {
     private static final Typeface bold = Typeface.create("sans-serif", Typeface.BOLD);
     private static final Typeface light = Typeface.create("sans-serif-light", Typeface.NORMAL);
 
-    private final ImageView bg = new ImageView(this);
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,26 +74,27 @@ public class ParanoidWorldActivity extends Activity {
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         mAccelerometerSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
-        DisplayMetrics metrics = new DisplayMetrics();
+        metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
 
         mContent = new FrameLayout(this);
         mContent.setBackgroundColor(BG_COLOR);
 
-        final FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
+        lp = new FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.WRAP_CONTENT,
                 FrameLayout.LayoutParams.WRAP_CONTENT);
         lp.gravity = Gravity.CENTER;
 
-        final FrameLayout.LayoutParams lp2 = new FrameLayout.LayoutParams(lp);
+        lp2 = new FrameLayout.LayoutParams(lp);
         lp2.gravity = Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL;
         lp2.bottomMargin = (int)(4 * metrics.density);
 
+        bg = new ImageView(this);
         bg.setImageResource(com.android.internal.R.drawable.paranoid_bg);
         bg.setScaleType(ImageView.ScaleType.CENTER_CROP);
         mContent.addView(bg, lp);
 
-        final ImageView world = new ImageView(this);
+        world = new ImageView(this);
         world.setImageResource(com.android.internal.R.drawable.paranoid_world);
         world.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
         world.setScaleX(0.5f);
@@ -96,7 +103,7 @@ public class ParanoidWorldActivity extends Activity {
         world.setVisibility(View.INVISIBLE);
         mContent.addView(world, lp);
 
-        final TextView text = new TextView(this);
+        text = new TextView(this);
         if (light != null) text.setTypeface(light);
         text.setTextSize(20);
         text.setPadding((int)(4 * metrics.density),
