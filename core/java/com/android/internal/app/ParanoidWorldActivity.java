@@ -74,8 +74,6 @@ public class ParanoidWorldActivity extends Activity {
         final ImageView bg = new ImageView(this);
         bg.setImageResource(com.android.internal.R.drawable.paranoid_bg);
         bg.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        bg.setScaleX(1.2f);
-        bg.setScaleY(1.2f);
         mContent.addView(bg, lp);
 
         final ImageView world = new ImageView(this);
@@ -118,8 +116,8 @@ public class ParanoidWorldActivity extends Activity {
             @Override
             public boolean onLongClick(View v) {
                 if (world.getVisibility() != View.VISIBLE) {
-                    bg.animate().alpha(0.5f)
-                        .setDuration(1000).setStartDelay(500)
+                    bg.animate().alpha(0.4f)
+                        .setDuration(900).setStartDelay(500)
                         .setInterpolator(new AccelerateInterpolator())
                         .start();
                     world.setVisibility(View.VISIBLE);
