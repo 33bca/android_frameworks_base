@@ -59,6 +59,8 @@ public class ParanoidWorldActivity extends Activity {
     private static final Typeface bold = Typeface.create("sans-serif", Typeface.BOLD);
     private static final Typeface light = Typeface.create("sans-serif-light", Typeface.NORMAL);
 
+    private final ImageView bg = new ImageView(this);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,7 +83,6 @@ public class ParanoidWorldActivity extends Activity {
         lp2.gravity = Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL;
         lp2.bottomMargin = (int)(4 * metrics.density);
 
-        final ImageView bg = new ImageView(this);
         bg.setImageResource(com.android.internal.R.drawable.paranoid_bg);
         bg.setScaleType(ImageView.ScaleType.CENTER_CROP);
         mContent.addView(bg, lp);
@@ -172,7 +173,7 @@ public class ParanoidWorldActivity extends Activity {
 
     @Override
     public void onPause() {
-        super.onResume();
+        super.onPause();
         mSensorManager.unregisterListener(mSensorEventListener);
     }
 
@@ -194,13 +195,7 @@ public class ParanoidWorldActivity extends Activity {
 	    @Override
 	    public void onSensorChanged(SensorEvent event) {
 		    float x = event.values[0];
-		    float y = event.values[1];
-		    float z = event.values[2];
-		    float acceleration = (float) Math.sqrt(x * x + y * y + z * z);
-
-		    if (acceleration > ACCELEROMETER_THRESHOLD && z <= ZFACEDOWN_THRESHOLD) {
-			    playChargingAnimation(false);
-		    }
+            bg.setTranslationX(x);
 	    }
 
 	    @Override
