@@ -201,5 +201,5 @@ public class ParanoidWorldActivity extends Activity {
 	    @Override
 	    public void onAccuracyChanged(Sensor sensor, int accuracy) {
 	    }
-    }
+    };
 }
