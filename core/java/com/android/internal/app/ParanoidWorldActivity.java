@@ -203,12 +203,12 @@ public class ParanoidWorldActivity extends Activity {
 	    public void onSensorChanged(SensorEvent event) {
             if (bg == null) return;
 		    float x = event.values[0];
-            //int widthBg = bg.getMeasuredWidth();
-            //int widthScreen = metrics.widthPixels;
-            bg.setTranslationX(x);
+            int widthBg = bg.getMeasuredWidth();
+            int widthScreen = metrics.widthPixels;
+            bg.setTranslationX(x * 10);
             android.util.Log.e("ParanoidWorldActivity", "x: " + x);
-            //android.util.Log.e("ParanoidWorldActivity", "widthBg: " + widthBg);
-            //android.util.Log.e("ParanoidWorldActivity", "widthScreen: " + widthScreen);
+            android.util.Log.e("ParanoidWorldActivity", "widthBg: " + widthBg);
+            android.util.Log.e("ParanoidWorldActivity", "widthScreen: " + widthScreen);
 	    }
 
 	    @Override
