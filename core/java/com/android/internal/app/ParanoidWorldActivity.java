@@ -42,7 +42,7 @@ import android.widget.TextView;
 public class ParanoidWorldActivity extends Activity {
     FrameLayout mContent;
 
-    private static final int BG_COLOR = 0xB0000000;
+    private static final int BG_COLOR = 0xFF000000;
     private static final int TEXT_COLOR = 0xFFFFFFFF;
 
     private static final String AOSPA_BUILD_VARIANT_PROP = "ro.aospa.build.variant";
@@ -118,6 +118,10 @@ public class ParanoidWorldActivity extends Activity {
             @Override
             public boolean onLongClick(View v) {
                 if (world.getVisibility() != View.VISIBLE) {
+                    bg.animate().alpha(0.5f)
+                        .setDuration(1000).setStartDelay(500)
+                        .setInterpolator(new AccelerateInterpolator())
+                        .start();
                     world.setVisibility(View.VISIBLE);
                     world.animate().alpha(1f).scaleX(1f).scaleY(1f)
                         .setDuration(1000).setStartDelay(500)
