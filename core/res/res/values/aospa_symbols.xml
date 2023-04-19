@@ -18,7 +18,6 @@
 
     <!-- Paranoid World Easter Egg -->
     <java-symbol type="drawable" name="paranoid_bg" />
-    <java-symbol type="drawable" name="paranoid_bean" />
     <java-symbol type="drawable" name="paranoid_world" />
 
     <!-- Alert Slider -->

@@ -78,12 +78,6 @@ public class ParanoidWorldActivity extends Activity {
         bg.setScaleY(1.2f);
         mContent.addView(bg, lp);
 
-        final ImageView bean = new ImageView(this);
-        bean.setImageResource(com.android.internal.R.drawable.paranoid_bean);
-        bean.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-        bean.setMaxWidth((int)(metrics.widthPixels * 0.75));
-        mContent.addView(bean, lp);
-
         final ImageView world = new ImageView(this);
         world.setImageResource(com.android.internal.R.drawable.paranoid_world);
         world.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
@@ -115,12 +109,6 @@ public class ParanoidWorldActivity extends Activity {
                     mContent.performLongClick();
                     return;
                 }
-                bean.animate().cancel();
-                final float offset = (int)bean.getRotation() % 360;
-                bean.animate()
-                    .rotationBy((Math.random() > 0.5f ? 360 : -360) - offset)
-                    .setInterpolator(new DecelerateInterpolator())
-                    .setDuration(700).start();
             }
         });
 
@@ -128,11 +116,6 @@ public class ParanoidWorldActivity extends Activity {
             @Override
             public boolean onLongClick(View v) {
                 if (world.getVisibility() != View.VISIBLE) {
-                    bean.animate().alpha(0f).scaleY(0.5f).scaleX(0.5f)
-                            .rotationBy(360)
-                            .setInterpolator(new AccelerateInterpolator())
-                            .setDuration(1000)
-                            .start();
                     world.setVisibility(View.VISIBLE);
                     world.setScaleX(0.5f);
                     world.setScaleY(0.5f);
