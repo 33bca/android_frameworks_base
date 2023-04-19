@@ -87,6 +87,7 @@ public class ParanoidWorldActivity extends Activity {
         final ImageView world = new ImageView(this);
         world.setImageResource(com.android.internal.R.drawable.paranoid_world);
         world.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+        world.setAlpha(0f);
         world.setVisibility(View.INVISIBLE);
         mContent.addView(world, lp);
 
@@ -101,6 +102,7 @@ public class ParanoidWorldActivity extends Activity {
         text.setGravity(Gravity.CENTER);
         text.setTransformationMethod(new AllCapsTransformationMethod(this));
         text.setText("Paranoid Android " + getVersion());
+        text.setAlpha(0f);
         text.setVisibility(View.INVISIBLE);
         mContent.addView(text, lp2);
 
@@ -131,7 +133,6 @@ public class ParanoidWorldActivity extends Activity {
                             .setInterpolator(new AccelerateInterpolator())
                             .setDuration(1000)
                             .start();
-                    world.setAlpha(0f);
                     world.setVisibility(View.VISIBLE);
                     world.setScaleX(0.5f);
                     world.setScaleY(0.5f);
@@ -139,7 +140,6 @@ public class ParanoidWorldActivity extends Activity {
                         .setDuration(1000).setStartDelay(500)
                         .setInterpolator(new AnticipateOvershootInterpolator())
                         .start();
-                    text.setAlpha(0f);
                     text.setVisibility(View.VISIBLE);
                     text.animate().alpha(1f).setDuration(1000).setStartDelay(1000).start();
                     return true;
