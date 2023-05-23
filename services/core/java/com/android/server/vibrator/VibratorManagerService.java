@@ -155,14 +155,12 @@ public class VibratorManagerService extends IVibratorManagerService.Stub {
     @GuardedBy("mLock")
     private boolean mServiceReady;
 
+    private RichTapVibratorService mRichTapService;
+
     private final VibrationSettings mVibrationSettings;
     private final VibrationScaler mVibrationScaler;
     private final InputDeviceDelegate mInputDeviceDelegate;
     private final DeviceVibrationEffectAdapter mDeviceVibrationEffectAdapter;
-
-    IRichtapCallback mRichtapAidlCallback = new RichtapCallback();
-    private RichTapVibratorService mRichTapService = new RichTapVibratorService(true, mRichtapAidlCallback);
-
 
     private BroadcastReceiver mIntentReceiver = new BroadcastReceiver() {
         @Override
@@ -185,6 +183,24 @@ public class VibratorManagerService extends IVibratorManagerService.Stub {
         }
     };
 
+    private final class RichtapCallback extends IRichtapCallback.Stub {
+        private RichtapCallback() { }
+        @Override
+        public void onCallback(int result) {
+            Slog.d(TAG, "RichtapCallback result:" + result);
+        }
+        @Override
+        public int getInterfaceVersion() {
+            Slog.d(TAG, "RichtapCallback getInterfaceVersion");
+            return 1;
+        }
+        @Override
+        public String getInterfaceHash() {
+            Slog.d(TAG, "RichtapCallback getInterfaceHash");
+            return "aac_richtap";
+        }
+    }
+
     static native long nativeInit(OnSyncedVibrationCompleteListener listener);
 
     static native long nativeGetFinalizer();
@@ -198,15 +214,6 @@ public class VibratorManagerService extends IVibratorManagerService.Stub {
     static native boolean nativeTriggerSynced(long nativeServicePtr, long vibrationId);
 
     static native void nativeCancelSynced(long nativeServicePtr);
-
-    private final class RichtapCallback extends IRichtapCallback.Stub {
-        private RichtapCallback() { }
-        @Override
-        public void onCallback(int result) {
-            Slog.d(TAG, "RichtapCallback result:" + result);
-        }
-    }
-
 
     @VisibleForTesting
     VibratorManagerService(Context context, Injector injector) {
@@ -236,6 +243,10 @@ public class VibratorManagerService extends IVibratorManagerService.Stub {
         mWakeLock.setReferenceCounted(true);
         mVibrationThread = new VibrationThread(mWakeLock, mVibrationThreadCallbacks);
         mVibrationThread.start();
+
+        if (RichTapVibrationEffect.isSupported()) {
+            mRichTapService = new RichTapVibratorService(new RichtapCallback());
+        }
 
         // Load vibrator hardware info. The vibrator ids and manager capabilities are loaded only
         // once and assumed unchanged for the lifecycle of this service. Each individual vibrator
@@ -421,10 +432,10 @@ public class VibratorManagerService extends IVibratorManagerService.Stub {
             if (!isEffectValid(effect)) {
                 return null;
             }
-
-            if (RichTapVibrationEffect.isSupported()
-                && mRichTapService.disposeRichtapEffectParams(effect)) {
-                return null;
+            if (RichTapVibrationEffect.isSupported()) {
+                if (mRichTapService != null
+                        && mRichTapService.disposeRichtapEffectParams(effect))
+                    return null;
             }
             attrs = fixupVibrationAttributes(attrs, effect);
             // Create Vibration.Stats as close to the received request as possible, for tracking.
@@ -493,7 +504,6 @@ public class VibratorManagerService extends IVibratorManagerService.Stub {
                             doStopVibrateLocked();
                         }
                     }
-
                     try {
                         if (mCurrentVibration != null) {
                             vib.stats().reportInterruptedAnotherVibration(
@@ -717,6 +727,7 @@ public class VibratorManagerService extends IVibratorManagerService.Stub {
             vibrator.updateAlwaysOn(vib.alwaysOnId, effect);
         }
     }
+
 	private void doVibratorOnEnvelope(int[] relativeTime, int[] scaleArr, int[] freqArr, boolean steepMode, int amplitude, int uid, VibrationAttributes attrs) {
         synchronized (mRichTapService) {
             mRichTapService.richTapVibratorOnEnvelope(relativeTime, scaleArr, freqArr, steepMode, amplitude);
@@ -1160,8 +1171,8 @@ public class VibratorManagerService extends IVibratorManagerService.Stub {
 
     private void fillVibrationFallbacks(Vibration vib, VibrationEffect effect) {
         if ((effect instanceof RichTapVibrationEffect.ExtPrebaked)
-			|| (effect instanceof RichTapVibrationEffect.Envelope)
-		|| (effect instanceof RichTapVibrationEffect.PatternHe)) {
+                || (effect instanceof RichTapVibrationEffect.Envelope)
+                || (effect instanceof RichTapVibrationEffect.PatternHe)) {
             return;
         }
         VibrationEffect.Composed composed = (VibrationEffect.Composed) effect;

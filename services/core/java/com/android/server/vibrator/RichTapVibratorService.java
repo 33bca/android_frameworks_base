@@ -179,20 +179,6 @@ public class RichTapVibratorService {
         return timeout;
     }
 
-    public int getRichTapPrebakStrength(int effectStrength) {
-        switch (effectStrength) {
-            case 0:
-                return 69;
-            case 1:
-                return 89;
-            case 2:
-                return 99;
-            default:
-                Slog.d(TAG, "wrong Effect Strength!!");
-                return 0;
-        }
-    }
-
     @SuppressLint("DefaultLocale")
     public void richTapVibratorOnEnvelope(int[] relativeTime, int[] scaleArr, int[] freqArr, boolean steepMode, int amplitude) {
         int[] params = new int[12];
