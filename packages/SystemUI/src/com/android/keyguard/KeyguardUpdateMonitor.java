@@ -160,6 +160,7 @@ import com.android.systemui.statusbar.StatusBarState;
 import com.android.systemui.statusbar.phone.KeyguardBypassController;
 import com.android.systemui.telephony.TelephonyListenerManager;
 import com.android.systemui.util.Assert;
+import com.android.systemui.util.RichTapVibrationUtils;
 import com.android.systemui.util.settings.SecureSettings;
 
 import com.google.android.collect.Lists;
@@ -382,6 +383,7 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
     private final FaceManager mFaceManager;
     private final LockPatternUtils mLockPatternUtils;
     private final boolean mWakeOnFingerprintAcquiredStart;
+    private RichTapVibrationUtils mRichtapVibrationUtils;
 
     private KeyguardBypassController mKeyguardBypassController;
     private List<SubscriptionInfo> mSubscriptionInfo;
@@ -1665,6 +1667,7 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
                             ActiveUnlockConfig.ACTIVE_UNLOCK_REQUEST_ORIGIN.BIOMETRIC_FAIL,
                             "fingerprintFailure");
                     handleFingerprintAuthFailed();
+                    handleRichtapVibrate("/system/etc/richtapresources/NT_unlock_error.he");
                 }
 
                 @Override
@@ -1672,6 +1675,8 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
                     Trace.beginSection("KeyguardUpdateMonitor#onAuthenticationSucceeded");
                     handleFingerprintAuthenticated(result.getUserId(), result.isStrongBiometric());
                     Trace.endSection();
+                    handleRichtapVibrate("/system/etc/richtapresources/NT_unlock_successful.he");
+
                 }
 
                 @Override
@@ -1686,6 +1691,7 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
                     Trace.beginSection("KeyguardUpdateMonitor#onAuthenticationError");
                     handleFingerprintError(errMsgId, errString.toString());
                     Trace.endSection();
+                    handleRichtapVibrate("/system/etc/richtapresources/NT_unlock_error.he");
                 }
 
                 @Override
@@ -1735,6 +1741,7 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
                                 "faceFailure-" + reason);
 
                     handleFaceAuthFailed();
+                    handleRichtapVibrate("/system/etc/richtapresources/NT_unlock_error.he");
                 }
 
                 @Override
@@ -1742,6 +1749,7 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
                     Trace.beginSection("KeyguardUpdateMonitor#onAuthenticationSucceeded");
                     handleFaceAuthenticated(result.getUserId(), result.isStrongBiometric());
                     Trace.endSection();
+                    handleRichtapVibrate("/system/etc/richtapresources/NT_unlock_successful.he");
                 }
 
                 @Override
@@ -1761,6 +1769,7 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
                                 ActiveUnlockConfig.ACTIVE_UNLOCK_REQUEST_ORIGIN.BIOMETRIC_FAIL,
                                 "faceError-" + errMsgId);
                     }
+                    handleRichtapVibrate("/system/etc/richtapresources/NT_unlock_error.he");
                 }
 
                 @Override
@@ -2083,6 +2092,7 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
                 .boxed()
                 .collect(Collectors.toSet());
         mFaceWakeUpTriggersConfig = faceWakeUpTriggersConfig;
+        mRichtapVibrationUtils = RichTapVibrationUtils.getInstance(mContext);
 
         updateFingerprintSettings();
 
@@ -3930,6 +3940,13 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
             Settings.System.putIntForUser(mContext.getContentResolver(),
                     Settings.System.FINGERPRINT_WAKE_UNLOCK,
                     2, UserHandle.USER_CURRENT);
+        }
+    }
+
+	private void handleRichtapVibrate(String vibrationFile) {
+		if (mRichtapVibrationUtils != null
+                    && mRichtapVibrationUtils.isSupported()) {
+			mRichtapVibrationUtils.playVerityVibrate(vibrationFile);
         }
     }
 
