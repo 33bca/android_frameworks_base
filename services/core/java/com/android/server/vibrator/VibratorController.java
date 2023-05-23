@@ -67,9 +67,6 @@ final class VibratorController {
 
     VibratorController(int vibratorId, OnVibrationCompleteListener listener) {
         this(vibratorId, listener, new NativeWrapper());
-        if (RichTapVibrationEffect.isSupported()) {
-            mRichTapService = new RichTapVibratorService();
-        }
     }
 
     @VisibleForTesting
@@ -80,6 +77,10 @@ final class VibratorController {
         VibratorInfo.Builder vibratorInfoBuilder = new VibratorInfo.Builder(vibratorId);
         mVibratorInfoLoadSuccessful = mNativeWrapper.getInfo(vibratorInfoBuilder);
         mVibratorInfo = vibratorInfoBuilder.build();
+
+        if (RichTapVibrationEffect.isSupported()) {
+            mRichTapService = new RichTapVibratorService();
+        }
 
         if (!mVibratorInfoLoadSuccessful) {
             Slog.e(TAG,
