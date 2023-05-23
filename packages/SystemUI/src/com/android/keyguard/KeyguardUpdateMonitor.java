@@ -1667,7 +1667,7 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
                             ActiveUnlockConfig.ACTIVE_UNLOCK_REQUEST_ORIGIN.BIOMETRIC_FAIL,
                             "fingerprintFailure");
                     handleFingerprintAuthFailed();
-                    handleRichtapVibrate("/system/etc/richtapresources/NT_unlock_error.he");
+                    handleRichtapVibrate("/system/etc/richtapresources/NT_unlock_successful.he");
                 }
 
                 @Override
@@ -1675,7 +1675,7 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
                     Trace.beginSection("KeyguardUpdateMonitor#onAuthenticationSucceeded");
                     handleFingerprintAuthenticated(result.getUserId(), result.isStrongBiometric());
                     Trace.endSection();
-                    handleRichtapVibrate("/system/etc/richtapresources/NT_unlock_successful.he");
+                    handleRichtapVibrate("/system/etc/richtapresources/NT_unlock_error.he");
 
                 }
 
