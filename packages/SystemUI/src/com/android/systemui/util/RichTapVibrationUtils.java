@@ -15,33 +15,27 @@
 package com.android.systemui.util;
 
 import android.content.Context;
+import android.os.HapticPlayer;
 import android.os.RichTapVibrationEffect;
-import android.util.Log;
+import android.util.Slog;
 
 import com.android.internal.R;
-import com.sysaac.haptic.AACHapticUtils;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class RichTapVibrationUtils {
 
-    private static RichTapVibrationUtils sInstance;
-    private AACHapticUtils mAACHapticUtils;
-    private Context mContext;
-    private boolean mSupportRichTap;
+    private static final String TAG = "RichTapVibrationUtils";
 
-    public static RichTapVibrationUtils getInstance(Context context) {
-        if (sInstance == null) {
-            sInstance = new RichTapVibrationUtils(context);
-        }
-        return sInstance;
-    }
+    private HapticPlayer mHapticPlayer;
+    private Boolean mSupportRichTap;
 
-    public RichTapVibrationUtils(Context context) {
-        mContext = context.getApplicationContext();
-        mAACHapticUtils = AACHapticUtils.getInstance();
-        mAACHapticUtils.init(mContext);
-        mSupportRichTap = mAACHapticUtils.isSupportedRichTap();
+    public RichTapVibrationUtils() {
+        mHapticPlayer = new HapticPlayer();
+        mSupportRichTap = mHapticPlayer.isAvailable();
     }
 
     public boolean playVerityVibrate(String heFile) {
@@ -52,7 +46,20 @@ public class RichTapVibrationUtils {
         if (!file.exists()) {
             return false;
         }
-        mAACHapticUtils.playPattern(file, 1);
+        StringBuilder sb = new StringBuilder();
+        try {
+            String line;
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            while ((line = br.readLine()) != null) {
+                sb.append(line);
+                sb.append('\n');
+            }
+            br.close();
+        }
+        catch (IOException e) {
+            return false;
+        }
+        mHapticPlayer.applyPatternHeWithString(sb.toString(), 1, 0, 255, 0);
         return true;
     }
 

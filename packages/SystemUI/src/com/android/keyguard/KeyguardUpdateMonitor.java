@@ -2092,7 +2092,7 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
                 .boxed()
                 .collect(Collectors.toSet());
         mFaceWakeUpTriggersConfig = faceWakeUpTriggersConfig;
-        mRichtapVibrationUtils = RichTapVibrationUtils.getInstance(mContext);
+        mRichtapVibrationUtils = new RichTapVibrationUtils();
 
         updateFingerprintSettings();
 
