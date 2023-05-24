@@ -163,7 +163,7 @@ public class RichTapVibrationEffect {
             case 2:
                 return 250;
             default:
-                Slog.d(TAG, "Wrong Effect Strength!!");
+                Slog.e(TAG, "Wrong Effect Strength!!");
                 return 0;
         }
     }
