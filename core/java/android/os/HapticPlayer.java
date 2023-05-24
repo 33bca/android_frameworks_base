@@ -475,14 +475,15 @@ public class HapticPlayer {
                                     pattern.mEvent[event].mRelativeTime = relativeTime;
                                     pattern.mEvent[event].mIntensity = intensity;
                                     pattern.mEvent[event].mFreq = frequency;
-                                    if (!eventTemp.has("Duration")) {
-                                        try {
-                                            Log.e(TAG, "event:" + mRelativeTimeLast + " don't have duration parameters");
-                                            return;
-                                        } catch (Exception e) {
-                                            e.printStackTrace();
+                                    if (mType == CONTINUOUS_EVENT) {
+                                        if (!eventTemp.has("Duration")) {
+                                            try {
+                                                Log.e(TAG, "event:" + mRelativeTimeLast + " don't have duration parameters");
+                                                return;
+                                            } catch (Exception e) {
+                                                e.printStackTrace();
+                                            }
                                         }
-                                    } else {
                                         durationLast = eventTemp.getInt("Duration");
                                         try {
                                             if (!isInTheInterval(durationLast, 0, 5000)) {
