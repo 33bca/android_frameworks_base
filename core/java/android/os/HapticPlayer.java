@@ -111,7 +111,7 @@ public class HapticPlayer {
     private static AtomicInteger mSeq = new AtomicInteger();
     private static int mRichtapMajorVersion = 0;
 
-    private HapticPlayer() {
+    public HapticPlayer() {
         mToken = new Binder();
         mStarted = false;
         mPackageName = ActivityThread.currentPackageName();
