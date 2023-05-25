@@ -443,8 +443,7 @@ public class HapticPlayer {
                             }
                         }
                         int vibId = eventTemp.getInt("Index");
-                        wrapperOffset = (byte) vibId;
-                        pattern.mEvent[event].mVibId = wrapperOffset;
+                        pattern.mEvent[event].mVibId = (byte) vibId;
                         if (!eventTemp.has("RelativeTime")) {
                             Log.e(TAG, "event:" + mRelativeTimeLast + " don't have relativeTime parameters,BAD he!");
                             return;
