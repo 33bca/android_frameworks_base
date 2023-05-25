@@ -448,13 +448,13 @@ public class HapticPlayer {
                             Log.e(TAG, "event:" + mRelativeTimeLast + " don't have relativeTime parameters,BAD he!");
                             return;
                         }
-                        mRelativeTimeLast = eventTemp.getInt("RelativeTime");
-                        if (event > 0 && mRelativeTimeLast < -1) {
+                        int relativeTime = eventTemp.getInt("RelativeTime");
+                        if (event > 0 && relativeTime < -1) {
                             Log.e(TAG, "pattern ind:" + mRelativeTimeLast + " event:" + event + " relative time is not right!");
                             return;
                         }
                         try {
-                            if (!isInTheInterval(mRelativeTimeLast, 0, 50000)) {
+                            if (!isInTheInterval(relativeTime, 0, 50000)) {
                                 try {
                                     break;
                                 } catch (Exception e) {
@@ -472,7 +472,7 @@ public class HapticPlayer {
                                         break;
                                     }
                                     pattern.mEvent[event].mType = mType;
-                                    pattern.mEvent[event].mRelativeTime = mRelativeTimeLast;
+                                    pattern.mEvent[event].mRelativeTime = relativeTime;
                                     pattern.mEvent[event].mIntensity = intensity;
                                     pattern.mEvent[event].mFreq = frequency;
                                     if (!eventTemp.has("Duration")) {
