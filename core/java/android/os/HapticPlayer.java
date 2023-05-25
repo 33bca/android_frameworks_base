@@ -4,7 +4,6 @@ import android.annotation.NonNull;
 import android.annotation.SuppressLint;
 import android.app.ActivityThread;
 import android.content.Context;
-import android.os.Build;
 import android.os.CombinedVibration;
 import android.os.VibrationAttributes;
 import android.os.VibrationEffect;
@@ -154,7 +153,7 @@ public class HapticPlayer {
     /** @hide */
     public static int getMinorVersion() {
         int support;
-        if (Build.VERSION.SDK_INT >= ANDROID_VERSIONCODE_O && (support = RichTapVibrationEffect.checkIfRichTapSupport()) != 2) {
+        if ((support = RichTapVibrationEffect.checkIfRichTapSupport()) != 2) {
             int clientCode = (16711680 & support) >> 16;
             int majorVersion = (65280 & support) >> 8;
             int minorVersion = (support & 255) >> 0;
