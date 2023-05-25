@@ -584,6 +584,7 @@ public class HapticPlayer {
                             e.printStackTrace();
                         }
                     }
+                    mRelativeTimeLast++;
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
