@@ -184,6 +184,11 @@ java_library_static {
     javac_shard_size: 50,
 }
 
+java_library_static {
+    name: "richtap",
+    srcs: ["java/vendor/**/*.java"],
+}
+
 java_genrule {
     name: "services.core.priorityboosted",
     srcs: [":services.core.unboosted"],
