@@ -63,7 +63,9 @@ public class BatteryChargeCalculator extends PowerCalculator {
             builder.setBatteryTimeRemainingMs(batteryTimeRemainingMs / 1000);
         }
 
-        final long chargeTimeRemainingMs = batteryStats.computeChargeTimeRemaining(rawRealtimeUs);
+        int chargeTimeRemainingMultiplier = Resources.getSystem().getInteger(
+                com.android.internal.R.integer.config_chargeTimeRemainingMultiplier);
+        final long chargeTimeRemainingMs = batteryStats.computeChargeTimeRemaining(rawRealtimeUs) * chargeTimeRemainingMultiplier;
         if (chargeTimeRemainingMs != -1) {
             builder.setChargeTimeRemainingMs(chargeTimeRemainingMs / 1000);
         }

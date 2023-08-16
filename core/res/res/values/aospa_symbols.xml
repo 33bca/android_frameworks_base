@@ -111,4 +111,7 @@
     <!-- Defines a custom dischargeMah divider for devices that report different values -->
     <java-symbol type="integer" name="config_dischargeMahDivider" />
 
+    <!-- Defines a custom chargeTimeRemaining multiplier for devices that report different values -->
+    <java-symbol type="integer" name="config_chargeTimeRemainingMultiplier" />
+
 </resources>

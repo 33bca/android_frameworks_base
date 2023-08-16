@@ -138,4 +138,7 @@
     <!-- Defines a custom dischargeMah divider for devices that report different values -->
     <integer name="config_dischargeMahDivider">1000</integer>
 
+    <!-- Defines a custom chargeTimeRemaining multiplier for devices that report different values -->
+    <integer name="config_chargeTimeRemainingMultiplier">1</integer>
+
 </resources>
